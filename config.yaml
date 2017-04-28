@@ -3,18 +3,18 @@ vagrantfile-local:
     vm:
         box: trusty64
         box_url: http://cloud-images.ubuntu.com/vagrant/trusty/current/trusty-server-cloudimg-amd64-vagrant-disk1.box
-        hostname: 'vagrant-wp.edlfb.net'
+        hostname: 'webserver-ubuntu.edlfb.net'
         memory: '2048'
         cpus: '1'
         chosen_provider: virtualbox
         network:
-            private_network: 192.168.77.77
+            private_network: 192.168.10.10
             forwarded_port:
                 CNLMNgtcBCbD:
                     host: '7300'
                     guest: '22'
-        pre_up_message: '### Vagrant WP provisionning has started ###'  
-        post_up_message: '### Installation of the Vagrant WP Completed ! ###'
+        pre_up_message: '### Webserver provisionning has started ###'
+        post_up_message: '### Installation of the Webserver Completed ! ###'
         provider:
             virtualbox:
                 modifyvm:

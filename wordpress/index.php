@@ -1,17 +1,35 @@
 <?php
-/**
- * Front to the WordPress application. This file doesn't do anything, but loads
- * wp-blog-header.php which does and tells WordPress to load the theme.
- *
- * @package WordPress
- */
 
-/**
- * Tells WordPress to load the WordPress theme and output it.
- *
- * @var bool
- */
-define('WP_USE_THEMES', true);
+   require 'vendor/autoload.php';
 
-/** Loads the WordPress Environment and Template */
-require( dirname( __FILE__ ) . '/wp-blog-header.php' );
+   use JiraRestApi\Issue\IssueService;
+   use JiraRestApi\JiraException;
+
+   try {
+   	$issueService = new IssueService();
+
+      $queryParam = [
+               'fields' => [  // default: '*all'
+                   'summary',
+                   'comment',
+               ],
+               'expand' => [
+                   'renderedFields',
+                   'names',
+                   'schema',
+                   'transitions',
+                   'operations',
+                   'editmeta',
+                   'changelog',
+               ]
+           ];
+
+   	$issue = $issueService->get('TEST-867', $queryParam);
+
+   	var_dump($issue->fields);
+   } catch (JiraException $e) {
+   	print("Error Occured! " . $e->getMessage());
+   }
+
+
+?>

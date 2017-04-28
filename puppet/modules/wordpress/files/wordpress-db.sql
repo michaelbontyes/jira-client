@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `wp_options` (
 --
 
 INSERT INTO `wp_options` (`option_id`, `option_name`, `option_value`, `autoload`) VALUES
-(1, 'siteurl', 'http://vagrant-wp.edlfb.net/', 'yes'),
+(1, 'siteurl', 'http://webserver.edlfb.net/', 'yes'),
 (2, 'blogname', 'Vagrant Wordpress', 'yes'),
 (3, 'blogdescription', 'Please update your permalinks', 'yes'),
 (4, 'users_can_register', '0', 'yes'),
@@ -148,7 +148,7 @@ INSERT INTO `wp_options` (`option_id`, `option_name`, `option_value`, `autoload`
 (33, 'blog_charset', 'UTF-8', 'yes'),
 (34, 'moderation_keys', '', 'no'),
 (35, 'active_plugins', 'a:0:{}', 'yes'),
-(36, 'home', 'http://vagrant-wp.edlfb.net/', 'yes'),
+(36, 'home', 'http://webserver.edlfb.net/', 'yes'),
 (37, 'category_base', '', 'yes'),
 (38, 'ping_sites', 'http://rpc.pingomatic.com/', 'yes'),
 (40, 'comment_max_links', '2', 'yes'),
@@ -313,7 +313,7 @@ CREATE TABLE IF NOT EXISTS `wp_posts` (
 --
 
 INSERT INTO `wp_posts` (`ID`, `post_author`, `post_date`, `post_date_gmt`, `post_content`, `post_title`, `post_excerpt`, `post_status`, `comment_status`, `ping_status`, `post_password`, `post_name`, `to_ping`, `pinged`, `post_modified`, `post_modified_gmt`, `post_content_filtered`, `post_parent`, `guid`, `menu_order`, `post_type`, `post_mime_type`, `comment_count`) VALUES
-(3, 1, '2016-03-31 13:53:18', '0000-00-00 00:00:00', '', 'Auto Draft', '', 'auto-draft', 'open', 'open', '', '', '', '', '2016-03-31 13:53:18', '0000-00-00 00:00:00', '', 0, 'http://vagrant-wp.edlfb.net/?p=3', 0, 'post', '', 0);
+(3, 1, '2016-03-31 13:53:18', '0000-00-00 00:00:00', '', 'Auto Draft', '', 'auto-draft', 'open', 'open', '', '', '', '', '2016-03-31 13:53:18', '0000-00-00 00:00:00', '', 0, 'http://webserver.edlfb.net/?p=3', 0, 'post', '', 0);
 
 -- --------------------------------------------------------
 
