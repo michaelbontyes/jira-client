@@ -4,21 +4,26 @@ require 'vendor/autoload.php';
 use JiraRestApi\Issue\IssueService;
 use JiraRestApi\JiraException;
 
-if(!empty($_POST["project"])){
+// function to fetch issues from JIRA
+function fetchIssues($project, $statuses){
 
-  // get the project - ajax
-  $project = $_POST["project"];
+  // default project
+  $project = (isset($project)) ? $project : 'DEVOPS' ;
 
-  // define statuses to fetch
-  $statuses = array(
+  // default statuses to fetch
+  $defaultStatuses = array(
     'Backlog'     => 'Backlog',
     'In Progress' => 'In Progress',
     'Done'        => 'Done'
   );
 
+  // default statuses
+  $statuses = (isset($statuses)) ? $statuses : $defaultStatuses ;
+
   // initialize list of issues
   $list = [];
 
+  // walk through statuses
   foreach ($statuses as $key => $status) {
 
     // define the JIRA JQL
@@ -34,11 +39,20 @@ if(!empty($_POST["project"])){
       // issues walker
       foreach ($response->issues as $issue) {
 
+        // get epic link
+        if (isset($issue->fields->customFields['customfield_10008'])) {
+          $jql = 'issue = '.$issue->fields->customFields['customfield_10008'];
+          $issueService = new issueService();
+          $response = $issueService->search($jql);
+          $epicLink = $response->issues[0]->fields->summary;
+        }
+
         // define details
         $issueDetails = array(
           "key"       => $issue->key,
           "summary"   => $issue->fields->summary,
           "type"      => $issue->fields->issuetype->name,
+          "epiclink"  => $epicLink,
           // "date"      => $issue->fields->duedate->format('Y-m-d H:i:s')
         );
 
@@ -50,8 +64,19 @@ if(!empty($_POST["project"])){
     } catch (JiraException $e) {
       $this->assertTrue(false, 'Query Failed : '.$e->getMessage());
     }
-
   }
+
+  // return the list
+  return $list;
+}
+
+if(!empty($_POST["project"])){
+
+  // get the project - ajax
+  $project = $_POST["project"];
+
+  // fetch issues
+  $list = fetchIssues($project);
 
   // ecnode the JSON for the front-end
   header('Content-Type: application/json');

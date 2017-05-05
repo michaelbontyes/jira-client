@@ -3,7 +3,7 @@
 <head>
   <title>Maintenance Reports</title>
   <link rel="stylesheet" href="css/jquery.dynatable.css" />
-  <link rel="stylesheet" href="css/reveal.css" />
+  <!-- <link rel="stylesheet" href="css/reveal.css" /> -->
 </head>
 <body>
 
@@ -11,10 +11,20 @@
   require 'vendor/autoload.php';
 
   use JiraRestApi\Project\ProjectService;
+  use JiraRestApi\Issue\IssueService;
   use JiraRestApi\JiraException;
 
   // get the list of projects
   try {
+
+    // exploring the API response
+    $jql = 'project = DEVOPS AND status = Backlog';
+    $issueService = new IssueService();
+    $response = $issueService->search($jql);
+    foreach ($response->issues as $issue) {
+      //var_dump($issue->fields->customFields['customfield_10008']);
+    }
+
     $proj = new ProjectService();
 
     // fetch the project objects
@@ -52,7 +62,7 @@ crossorigin="anonymous"></script>
 $(document).ready(function(){
 
   // initialize RevealJS
-  Reveal.initialize();
+  //Reveal.initialize();
 
   // prepare the deck
   deck = $('#blank').parent();
@@ -78,6 +88,10 @@ $(document).ready(function(){
 
       // ajax payload
       success: function(result){
+
+        console.log(result);
+
+        // walk through the payload object
         $.each(result, function(idx, obj){
 
           // convert the status name to an ID
@@ -90,7 +104,7 @@ $(document).ready(function(){
           html += '<section>';
           html += '<h2>'+idx+'</h2>';
           html += '<table id="'+id+'">';
-          html += '<thead><th>Key</th><th>Summary</th><th>Type</th></thead><tbody></tbody>';
+          html += '<thead><th>Key</th><th>Summary</th><th>Type</th><th>Epiclink</th></thead><tbody></tbody>';
           html += '</table></section>';
 
           // render the HTML slide
