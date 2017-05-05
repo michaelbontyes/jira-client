@@ -1,0 +1,5 @@
+[2017-05-03 21:12:36] JiraClient.ERROR: CURL Error: http response=0, Could not resolve host: djeholdings.atlassian.net [] []
+[2017-05-03 21:14:16] JiraClient.ERROR: CURL Error: http response=0, Could not resolve host: djeholdings.atlassian.net [] []
+[2017-05-03 21:14:32] JiraClient.ERROR: CURL Error: http response=0, Could not resolve host: djeholdings.atlassian.net [] []
+[2017-05-03 21:14:41] JiraClient.ERROR: CURL Error: http response=0, Could not resolve host: djeholdings.atlassian.net [] []
+[2017-05-05 00:15:44] JiraClient.ERROR: CURL Error: http response=0, Could not resolve host: djeholdings.atlassian.net [] []
