@@ -6,32 +6,29 @@ use JiraRestApi\JiraException;
 
 if(!empty($_POST["project"])){
 
+  // get the project - ajax
   $project = $_POST["project"];
-  //$status = 'Backlog';
-  // define the JIRA JQL
-  //$jql = 'project = '.$project.' AND status = '.$status;
-  //$jql = 'project = "'.$project.'" AND status = "'.$status.'" ORDER BY updated ASC';
-  //$jql = 'project = '.$project.' AND issuetype in (Epic, "Scheduled Task") AND status in (Backlog, "Selected for Development", "In Progress", Icebox, Validation) ORDER BY due ASC, priority DESC, updated DESC';
 
+  // define statuses to fetch
   $statuses = array(
     'Backlog'     => 'Backlog',
     'In Progress' => 'In Progress',
     'Done'        => 'Done'
   );
+
+  // initialize list of issues
   $list = [];
 
   foreach ($statuses as $key => $status) {
 
+    // define the JIRA JQL
     $jql = 'project = '.$project.' AND status = "'.$status.'" ORDER BY updated ASC';
 
-  try {
+    try {
       $issueService = new IssueService();
 
-      // first fetch
+      // fetch issues
       $response = $issueService->search($jql);
-
-      // initialize list of issues
-
 
 
       // issues walker
@@ -39,37 +36,25 @@ if(!empty($_POST["project"])){
 
         // define details
         $issueDetails = array(
-              "key"       => $issue->key,
-              "summary"   => $issue->fields->summary,
-              "type"      => $issue->fields->issuetype->name,
-              // "date"      => $issue->fields->duedate->format('Y-m-d H:i:s')
+          "key"       => $issue->key,
+          "summary"   => $issue->fields->summary,
+          "type"      => $issue->fields->issuetype->name,
+          // "date"      => $issue->fields->duedate->format('Y-m-d H:i:s')
         );
-        $list[$status][] = $issueDetails;
-        //var_dump($issueDetails);
-        // display the results for development
-        //print (vsprintf("<li> %s %s %s %s</li>\n", $issueDetails));
 
-        // push Issue details to the list of issues
-        //$list['Backlog'] = $issueDetails;
-        //array_push ( $list, $issueDetails );
+        // push the issue details to the list
+        $list[$status][] = $issueDetails;
 
       }
 
-      // json encode and dump
-      //$issuesJSON = json_encode($issuesList);
-
-      //var_dump($issuesJSON);
-
-      // generate PDF report based on the reveal slides
-      //$output = shell_exec('./phantomjs decktape.js reveal http://webserver-ubuntu.edlfb.net/php/ /vagrant/wordpress/php/report.pdf');
-      //echo "<pre>$output</pre>";
-
-  } catch (JiraException $e) {
+    } catch (JiraException $e) {
       $this->assertTrue(false, 'Query Failed : '.$e->getMessage());
+    }
+
   }
 
-}
-header('Content-Type: application/json');
-echo json_encode($list);
+  // ecnode the JSON for the front-end
+  header('Content-Type: application/json');
+  echo json_encode($list);
 
 }

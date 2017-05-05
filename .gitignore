@@ -14,17 +14,10 @@ script.min.js
 scripts.min.js
 .htaccess
 npm-debug.log
-wordpress/wp-content/.rev
-wordpress/wp-content/advanced-cache.php
-wordpress/wp-content/cache/
-wordpress/wp-content/uploads/
-wordpress/wp-content/uploads/pb_backupbuddy/
-wordpress/wp-content/uploads/backupbuddy_backups/
-wordpress/wp-content/w3tc-config/
 
-#Tests specific ignores
 /tests/_output/*
-/composer.lock
-/composer.phar
-/installer
-/vendor
+wordpress/php/composer.lock
+wordpress/php/composer.phar
+wordpress/php/installer
+wordpress/php/vendor
+wordpress/php/.env
